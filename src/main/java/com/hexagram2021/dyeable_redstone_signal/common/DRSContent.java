@@ -1,10 +1,7 @@
 package com.hexagram2021.dyeable_redstone_signal.common;
 
 import com.hexagram2021.dyeable_redstone_signal.common.block.RedstoneWireBlock;
-import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlockEntities;
-import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlocks;
-import com.hexagram2021.dyeable_redstone_signal.common.register.DRSContainerTypes;
-import com.hexagram2021.dyeable_redstone_signal.common.register.DRSItems;
+import com.hexagram2021.dyeable_redstone_signal.common.register.*;
 import com.hexagram2021.dyeable_redstone_signal.common.util.DRSSounds;
 import com.hexagram2021.dyeable_redstone_signal.common.world.Villages;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -29,6 +26,7 @@ public class DRSContent {
 		DRSBlocks.init(bus);
 		DRSItems.init(bus);
 		DRSBlockEntities.init(bus);
+		DRSCreativeModeTabs.init(bus);
 		DRSContainerTypes.init(bus);
 		Villages.Registers.init(bus);
 	}

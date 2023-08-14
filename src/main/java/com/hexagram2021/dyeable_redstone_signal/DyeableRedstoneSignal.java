@@ -2,17 +2,10 @@ package com.hexagram2021.dyeable_redstone_signal;
 
 import com.hexagram2021.dyeable_redstone_signal.client.ClientProxy;
 import com.hexagram2021.dyeable_redstone_signal.common.DRSContent;
-import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlocks;
-import com.hexagram2021.dyeable_redstone_signal.common.register.DRSItems;
 import com.hexagram2021.dyeable_redstone_signal.common.world.Villages;
 import com.mojang.logging.LogUtils;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
@@ -25,7 +18,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
 import org.slf4j.Logger;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -62,7 +54,6 @@ public class DyeableRedstoneSignal {
                 ModLoadingContext.get().getActiveContainer(), job
         );
         DRSContent.modConstruction(bus, runLater);
-        bus.addListener(this::creativeTabEvent);
 
         DistExecutor.safeRunWhenOn(Dist.CLIENT, bootstrapErrorToXCPInDev(() -> ClientProxy::modConstruction));
 
@@ -78,21 +69,7 @@ public class DyeableRedstoneSignal {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        // some preinit code
         LOGGER.info("Let's make redstone more colorful!");
         event.enqueueWork(DRSContent::init);
-    }
-
-    @Nullable
-    public static CreativeModeTab ITEM_GROUP;
-
-    public void creativeTabEvent(CreativeModeTabEvent.Register event) {
-        ITEM_GROUP = event.registerCreativeModeTab(
-                new ResourceLocation(MODID, "item_group"),
-                builder ->
-                        builder.icon(() -> new ItemStack(DRSBlocks.CYAN_REDSTONE_WIRE.get()))
-                                .title(Component.translatable("itemGroup.dyeable_redstone_signal"))
-                                .displayItems((flags, output) -> DRSItems.ItemEntry.ALL_ITEMS.forEach(output::accept))
-        );
     }
 }

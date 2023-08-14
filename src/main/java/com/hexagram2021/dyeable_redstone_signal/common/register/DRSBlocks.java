@@ -7,8 +7,8 @@ import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,13 +22,13 @@ public class DRSBlocks {
 	private DRSBlocks() {}
 
 	public static final BlockBehaviour.Properties REDSTONE_WIRE_PROPERTIES =
-			BlockBehaviour.Properties.of(Material.DECORATION).noCollission().instabreak();
+			BlockBehaviour.Properties.of().noCollission().instabreak().pushReaction(PushReaction.DESTROY);
 
 	public static final BlockBehaviour.Properties CONVERTER_PROPERTIES =
-			BlockBehaviour.Properties.of(Material.DECORATION).instabreak().sound(SoundType.WOOD);
+			BlockBehaviour.Properties.of().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY);
 
 	public static final BlockBehaviour.Properties REDSTONE_DYER_PROPERTIES =
-			BlockBehaviour.Properties.of(Material.METAL, MaterialColor.STONE).requiresCorrectToolForDrops().strength(2.0F);
+			BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).requiresCorrectToolForDrops().strength(2.0F);
 
 	public static final RegistryObject<CommonRedstoneWireBlock> COMMON_REDSTONE_WIRE = REGISTER.register(
 		"common_redstone_wire", () -> new CommonRedstoneWireBlock(REDSTONE_WIRE_PROPERTIES)
