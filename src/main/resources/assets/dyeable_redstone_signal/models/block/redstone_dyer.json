@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "dyeable_redstone_signal:block/redstone_dyer_side",
+    "north": "dyeable_redstone_signal:block/redstone_dyer_side",
+    "south": "dyeable_redstone_signal:block/redstone_dyer_side",
+    "east": "dyeable_redstone_signal:block/redstone_dyer_side",
+    "west": "dyeable_redstone_signal:block/redstone_dyer_side",
+    "up": "dyeable_redstone_signal:block/redstone_dyer_top",
+    "down": "dyeable_redstone_signal:block/redstone_dyer_bottom"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " c ",
+    "srs",
+    " s "
+  ],
+  "key": {
+    "c": {
+      "item": "minecraft:compass"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "dyeable_redstone_signal:redstone_ammeter"
+  }
+}

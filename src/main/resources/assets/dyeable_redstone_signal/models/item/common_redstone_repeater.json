@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dyeable_redstone_signal:item/common_redstone_repeater"
+  }
+}

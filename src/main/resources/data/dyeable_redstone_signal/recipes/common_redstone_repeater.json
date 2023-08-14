@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "TRT",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:stone"
+    },
+    "T": {
+      "item": "minecraft:redstone_torch"
+    },
+    "R": {
+      "item": "dyeable_redstone_signal:common_redstone"
+    }
+  },
+  "result": {
+    "item": "dyeable_redstone_signal:common_redstone_repeater"
+  }
+}

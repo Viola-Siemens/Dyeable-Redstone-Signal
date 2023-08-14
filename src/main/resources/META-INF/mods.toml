@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[41,)"
+license="All rights reserved"
+
+[[mods]]
+modId="dyeable_redstone_signal"
+version="${file.jarVersion}"
+displayName="Dyeable Redstone Signal"
+logoFile="logo.png"
+credits="Liu Dongyu"
+authors="Hexagram"
+
+description='''
+With this mod, you can use common redstone and dyeable redstone to propagate redstone signals, so that you can make your redstone circuits more complex.
+
+Coded by Liu Dongyu.
+'''
+
+[[dependencies.dyeable_redstone_signal]]
+    modId="forge"
+    mandatory=true
+    versionRange="[41,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.dyeable_redstone_signal]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19,1.20)"
+    ordering="NONE"
+    side="BOTH"

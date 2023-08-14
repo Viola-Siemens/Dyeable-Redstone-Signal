@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SIS",
+    " C ",
+    "###"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:cobblestone"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "minecraft:cauldron"
+    },
+    "#": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "dyeable_redstone_signal:redstone_dyer"
+  }
+}

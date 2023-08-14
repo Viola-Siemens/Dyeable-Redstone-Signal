@@ -1,0 +1,9 @@
+{
+  "villager.work_energy_researcher": {
+    "category": "entity",
+    "sounds": [
+      "dyeable_redstone_signal:villager/work_energy_researcher"
+    ],
+    "subtitle": "subtitles.entity.villager.work_energy_researcher"
+  }
+}

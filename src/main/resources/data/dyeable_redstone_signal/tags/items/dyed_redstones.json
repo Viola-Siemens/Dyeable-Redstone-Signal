@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "dyeable_redstone_signal:black_redstone",
+    "dyeable_redstone_signal:blue_redstone",
+    "dyeable_redstone_signal:brown_redstone",
+    "dyeable_redstone_signal:cyan_redstone",
+    "dyeable_redstone_signal:gray_redstone",
+    "dyeable_redstone_signal:green_redstone",
+    "dyeable_redstone_signal:light_blue_redstone",
+    "dyeable_redstone_signal:light_gray_redstone",
+    "dyeable_redstone_signal:lime_redstone",
+    "dyeable_redstone_signal:magenta_redstone",
+    "dyeable_redstone_signal:orange_redstone",
+    "dyeable_redstone_signal:pink_redstone",
+    "dyeable_redstone_signal:purple_redstone",
+    "dyeable_redstone_signal:red_redstone",
+    "dyeable_redstone_signal:white_redstone",
+    "dyeable_redstone_signal:yellow_redstone"
+  ]
+}

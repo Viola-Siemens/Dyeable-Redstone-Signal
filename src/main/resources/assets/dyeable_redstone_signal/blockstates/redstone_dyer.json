@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "dyeable_redstone_signal:block/redstone_dyer"
+    }
+  }
+}

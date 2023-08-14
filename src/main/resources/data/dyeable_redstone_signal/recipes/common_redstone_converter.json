@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " R ",
+    "###"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:repeater"
+    },
+    "#": {
+      "item": "dyeable_redstone_signal:common_redstone"
+    }
+  },
+  "result": {
+    "item": "dyeable_redstone_signal:common_redstone_converter"
+  }
+}
