@@ -92,7 +92,7 @@ public class DyeableRedstoneSignal {
                 builder ->
                         builder.icon(() -> new ItemStack(DRSBlocks.CYAN_REDSTONE_WIRE.get()))
                                 .title(Component.translatable("itemGroup.dyeable_redstone_signal"))
-                                .displayItems((flags, output, hasPermission) -> DRSItems.ItemEntry.ALL_ITEMS.forEach(output::accept))
+                                .displayItems((flags, output) -> DRSItems.ItemEntry.ALL_ITEMS.forEach(output::accept))
         );
     }
 }

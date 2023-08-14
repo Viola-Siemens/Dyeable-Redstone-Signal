@@ -1,6 +1,7 @@
 modLoader="javafml"
-loaderVersion="[44,)"
-license="All rights reserved"
+loaderVersion="[45,)"
+issueTrackerURL="https://github.com/Viola-Siemens/Dyeable-Redstone-Signal/issues"
+license="AGPL v3"
 
 [[mods]]
 modId="dyeable_redstone_signal"
@@ -19,12 +20,12 @@ Coded by Liu Dongyu.
 [[dependencies.dyeable_redstone_signal]]
     modId="forge"
     mandatory=true
-    versionRange="[44,)"
+    versionRange="[45,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.dyeable_redstone_signal]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.3,1.20)"
+    versionRange="[1.19.4,1.20)"
     ordering="NONE"
     side="BOTH"
