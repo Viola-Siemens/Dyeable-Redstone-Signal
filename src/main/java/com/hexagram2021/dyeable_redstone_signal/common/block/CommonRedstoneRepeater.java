@@ -183,11 +183,6 @@ public class CommonRedstoneRepeater extends DiodeBlock implements EntityBlock {
 	}
 
 	@Override
-	protected boolean isAlternateInput(BlockState blockState) {
-		return isDiode(blockState);
-	}
-
-	@Override
 	public void animateTick(BlockState blockState, Level level, BlockPos blockPos, RandomSource random) {
 		if (blockState.getValue(POWERED)) {
 			Direction direction = blockState.getValue(FACING);

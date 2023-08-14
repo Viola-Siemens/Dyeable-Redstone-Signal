@@ -3,11 +3,9 @@ package com.hexagram2021.dyeable_redstone_signal.client.screens;
 import com.hexagram2021.dyeable_redstone_signal.common.block.entity.CommonRedstoneWireBlockEntity;
 import com.hexagram2021.dyeable_redstone_signal.common.block.entity.RedstoneDyerBlockEntity;
 import com.hexagram2021.dyeable_redstone_signal.common.crafting.RedstoneDyerMenu;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,32 +32,29 @@ public class RedstoneDyerScreen extends AbstractContainerScreen<RedstoneDyerMenu
 	}
 
 	@Override
-	public void render(PoseStack transform, int x, int y, float partialTicks) {
+	public void render(GuiGraphics transform, int x, int y, float partialTicks) {
 		this.renderBackground(transform);
 		super.render(transform, x, y, partialTicks);
 		this.renderTooltip(transform, x, y);
 	}
 
 	@Override
-	protected void renderBg(PoseStack transform, float partialTicks, int x, int y) {
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, BG_LOCATION);
+	protected void renderBg(GuiGraphics transform, float partialTicks, int x, int y) {
 		int i = this.leftPos;
 		int j = this.topPos;
-		this.blit(transform, i, j, 0, 0, this.imageWidth, this.imageHeight);
+		transform.blit(BG_LOCATION, i, j, 0, 0, this.imageWidth, this.imageHeight);
 		int recipeX = this.leftPos + RECIPES_X;
 		int recipeY = this.topPos + RECIPES_Y;
 		this.renderButtons(transform, x, y, recipeX, recipeY);
 		int fluidLevel = this.menu.getFluidLevel();
 		if(fluidLevel > 0) {
 			int k = Mth.clamp(fluidLevel, 1, 50);
-			fill(transform, i + 19, j + 69 - k, i + 27, j + 69, RedstoneDyerBlockEntity.DYE_COLORS[this.menu.getFluidType()].getTextColor() | 0xff000000);
+			transform.fill(i + 19, j + 69 - k, i + 27, j + 69, RedstoneDyerBlockEntity.DYE_COLORS[this.menu.getFluidType()].getTextColor() | 0xff000000);
 		}
 	}
 
 	@Override
-	protected void renderTooltip(PoseStack transform, int x, int y) {
+	protected void renderTooltip(GuiGraphics transform, int x, int y) {
 		super.renderTooltip(transform, x, y);
 
 		int recipeX = this.leftPos + RECIPES_X;
@@ -69,12 +64,12 @@ public class RedstoneDyerScreen extends AbstractContainerScreen<RedstoneDyerMenu
 			int curX = recipeX + i * RECIPES_IMAGE_SIZE_WIDTH;
 			int curY = recipeY + 2;
 			if (x >= curX && x < curX + RECIPES_IMAGE_SIZE_WIDTH && y >= curY && y < curY + RECIPES_IMAGE_SIZE_WIDTH) {
-				this.renderTooltip(transform, Component.translatable("tooltip.dyeable_redstone_signal.redstone_dyer" + i), x, y);
+				transform.renderTooltip(this.font, Component.translatable("tooltip.dyeable_redstone_signal.redstone_dyer" + i), x, y);
 			}
 		}
 		if(this.menu.getFluidLevel() > 0 && x >= this.leftPos + 19 && x < this.leftPos + 27 && y >= this.topPos + 19 && y < this.topPos + 69) {
-			this.renderTooltip(
-					transform, Component.translatable(
+			transform.renderTooltip(
+					this.font, Component.translatable(
 						"tooltip.dyeable_redstone_signal.dye_slot",
 						Component.translatable("item.minecraft." + CommonRedstoneWireBlockEntity.COLORS[this.menu.getFluidType()] + "_dye"),
 						this.menu.getFluidLevel()
@@ -84,7 +79,7 @@ public class RedstoneDyerScreen extends AbstractContainerScreen<RedstoneDyerMenu
 		}
 	}
 
-	private void renderButtons(PoseStack transform, int x, int y, int recipeX, int recipeY) {
+	private void renderButtons(GuiGraphics transform, int x, int y, int recipeX, int recipeY) {
 		for(int i = 0; i < 2; ++i) {
 			int curX = recipeX + i * (RECIPES_IMAGE_SIZE_WIDTH + 1);
 			int curY = recipeY + 2;
@@ -95,7 +90,7 @@ public class RedstoneDyerScreen extends AbstractContainerScreen<RedstoneDyerMenu
 				h += RECIPES_IMAGE_SIZE_HEIGHT * 2;
 			}
 
-			this.blit(transform, curX, curY - 1, i * RECIPES_IMAGE_SIZE_WIDTH, h, RECIPES_IMAGE_SIZE_WIDTH, RECIPES_IMAGE_SIZE_HEIGHT);
+			transform.blit(BG_LOCATION, curX, curY - 1, i * RECIPES_IMAGE_SIZE_WIDTH, h, RECIPES_IMAGE_SIZE_WIDTH, RECIPES_IMAGE_SIZE_HEIGHT);
 		}
 	}
 
