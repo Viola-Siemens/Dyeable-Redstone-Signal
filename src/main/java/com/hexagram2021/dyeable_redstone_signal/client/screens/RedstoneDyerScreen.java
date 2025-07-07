@@ -12,8 +12,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import static com.hexagram2021.dyeable_redstone_signal.DyeableRedstoneSignal.MODID;
 
@@ -33,7 +33,6 @@ public class RedstoneDyerScreen extends AbstractContainerScreen<RedstoneDyerMenu
 
 	@Override
 	public void render(GuiGraphics transform, int x, int y, float partialTicks) {
-		this.renderBackground(transform);
 		super.render(transform, x, y, partialTicks);
 		this.renderTooltip(transform, x, y);
 	}

@@ -11,10 +11,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegisterEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 import java.util.function.Consumer;
 
@@ -36,7 +36,7 @@ public class DRSContent {
 
 		CauldronInteraction DYED_REDSTONE = (blockState, level, blockPos, player, hand, itemStack) -> {
 			Item item = itemStack.getItem();
-			if(item instanceof BlockItem blockItem && blockItem.getBlock() instanceof RedstoneWireBlock wireBlock) {
+			if(item instanceof BlockItem blockItem && blockItem.getBlock() instanceof RedstoneWireBlock) {
 				if (!level.isClientSide) {
 					if (!player.getAbilities().instabuild) {
 						itemStack.shrink(1);

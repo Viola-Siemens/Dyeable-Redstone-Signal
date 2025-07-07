@@ -1,7 +1,6 @@
 package com.hexagram2021.dyeable_redstone_signal.client;
 
 import com.hexagram2021.dyeable_redstone_signal.client.screens.RedstoneDyerScreen;
-import com.hexagram2021.dyeable_redstone_signal.common.CommonProxy;
 import com.hexagram2021.dyeable_redstone_signal.common.block.ColorfulRedstoneWireBlock;
 import com.hexagram2021.dyeable_redstone_signal.common.block.CommonRedstoneWireBlock;
 import com.hexagram2021.dyeable_redstone_signal.common.block.RedstoneWireBlock;
@@ -10,21 +9,16 @@ import com.hexagram2021.dyeable_redstone_signal.common.register.DRSContainerType
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 
 import static com.hexagram2021.dyeable_redstone_signal.DyeableRedstoneSignal.MODID;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ClientProxy extends CommonProxy {
-	public static void modConstruction() {
-
-	}
-
-	@SuppressWarnings("removal")
+public class ClientEventSubscriber {
 	private static void setRenderLayer() {
 		ItemBlockRenderTypes.setRenderLayer(DRSBlocks.COMMON_REDSTONE_WIRE.get(), RenderType.cutoutMipped());
 		ItemBlockRenderTypes.setRenderLayer(DRSBlocks.BLACK_REDSTONE_WIRE.get(), RenderType.cutoutMipped());

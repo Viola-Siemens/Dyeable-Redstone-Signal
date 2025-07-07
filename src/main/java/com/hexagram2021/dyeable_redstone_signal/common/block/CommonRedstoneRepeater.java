@@ -127,7 +127,7 @@ public class CommonRedstoneRepeater extends DiodeBlock implements EntityBlock {
 			boolean flag1 = this.shouldTurnOn(level, blockPos, blockState);
 			if (flag && !flag1) {
 				if(level.getBlockEntity(blockPos) instanceof CommonRedstoneRepeaterBlockEntity commonRedstoneRepeater) {
-					commonRedstoneRepeater.setColoredEnergies(Util.make(new int[16], (nums) -> Arrays.fill(nums, 0)));
+					commonRedstoneRepeater.setColoredEnergies(Util.make(new int[16], nums -> Arrays.fill(nums, 0)));
 				}
 				level.setBlock(blockPos, blockState.setValue(POWERED, Boolean.FALSE), 2);
 			} else {

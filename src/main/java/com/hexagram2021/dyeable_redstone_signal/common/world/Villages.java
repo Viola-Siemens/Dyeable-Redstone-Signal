@@ -24,13 +24,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,7 +44,7 @@ public class Villages {
 	public static final ResourceLocation ENERGY_RESEARCHER = new ResourceLocation(MODID, "energy_researcher");
 
 	public static void init() {
-		HeroGiftsTaskAccess.getGifts().put(Registers.PROF_ENERGY_RESEARCHER.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/energy_researcher_gift"));
+		HeroGiftsTaskAccess.drs$getGifts().put(Registers.PROF_ENERGY_RESEARCHER.get(), new ResourceLocation(MODID, "gameplay/hero_of_the_village/energy_researcher_gift"));
 	}
 
 	public static void addAllStructuresToPool(RegistryAccess registryAccess) {
@@ -56,26 +55,25 @@ public class Villages {
 	private static void addToPool(ResourceLocation poolName, ResourceLocation toAdd, int weight, RegistryAccess registryAccess) {
 		Registry<StructureTemplatePool> registry = registryAccess.registryOrThrow(Registries.TEMPLATE_POOL);
 		StructureTemplatePoolAccess pool = (StructureTemplatePoolAccess) Objects.requireNonNull(registry.get(poolName), poolName.getPath());
-		List<Pair<StructurePoolElement, Integer>> rawTemplates = pool.getRawTemplates() instanceof ArrayList ?
-				pool.getRawTemplates() : new ArrayList<>(pool.getRawTemplates());
+		List<Pair<StructurePoolElement, Integer>> rawTemplates = pool.drs$getRawTemplates() instanceof ArrayList ?
+				pool.drs$getRawTemplates() : new ArrayList<>(pool.drs$getRawTemplates());
 
 		SinglePoolElement addedElement = SinglePoolElement.single(toAdd.toString()).apply(StructureTemplatePool.Projection.RIGID);
 		rawTemplates.add(Pair.of(addedElement, weight));
-		pool.getTemplates().add(addedElement);
+		pool.drs$getTemplates().add(addedElement);
 
-		pool.setRawTemplates(rawTemplates);
+		pool.drs$setRawTemplates(rawTemplates);
 	}
 
 	@SuppressWarnings("SameParameterValue")
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class Registers {
-		public static final DeferredRegister<PoiType> POINTS_OF_INTEREST = DeferredRegister.create(ForgeRegistries.POI_TYPES, MODID);
-		public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, MODID);
+		public static final DeferredRegister<PoiType> POINTS_OF_INTEREST = DeferredRegister.create(Registries.POINT_OF_INTEREST_TYPE, MODID);
+		public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(Registries.VILLAGER_PROFESSION, MODID);
 
-		public static final RegistryObject<PoiType> POI_REDSTONE_DYER = POINTS_OF_INTEREST.register(
+		public static final DeferredHolder<PoiType, PoiType> POI_REDSTONE_DYER = POINTS_OF_INTEREST.register(
 				"redstone_dyer", () -> createPOI(assembleStates(DRSBlocks.REDSTONE_DYER.get()))
 		);
-		public static final RegistryObject<VillagerProfession> PROF_ENERGY_RESEARCHER = PROFESSIONS.register(
+		public static final DeferredHolder<VillagerProfession, VillagerProfession> PROF_ENERGY_RESEARCHER = PROFESSIONS.register(
 				ENERGY_RESEARCHER.getPath(), () -> createProf(ENERGY_RESEARCHER, POI_REDSTONE_DYER::getKey, DRSSounds.VILLAGER_WORK_ENERGY_RESEARCHER)
 		);
 

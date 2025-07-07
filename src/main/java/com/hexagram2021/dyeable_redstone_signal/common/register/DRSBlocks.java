@@ -1,6 +1,7 @@
 package com.hexagram2021.dyeable_redstone_signal.common.register;
 
 import com.hexagram2021.dyeable_redstone_signal.common.block.*;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
@@ -9,15 +10,14 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static com.hexagram2021.dyeable_redstone_signal.DyeableRedstoneSignal.MODID;
 
 public class DRSBlocks {
-	public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+	public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(Registries.BLOCK, MODID);
 
 	private DRSBlocks() {}
 
@@ -30,56 +30,56 @@ public class DRSBlocks {
 	public static final BlockBehaviour.Properties REDSTONE_DYER_PROPERTIES =
 			BlockBehaviour.Properties.of().mapColor(MapColor.STONE).sound(SoundType.METAL).requiresCorrectToolForDrops().strength(2.0F);
 
-	public static final RegistryObject<CommonRedstoneWireBlock> COMMON_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, CommonRedstoneWireBlock> COMMON_REDSTONE_WIRE = REGISTER.register(
 		"common_redstone_wire", () -> new CommonRedstoneWireBlock(REDSTONE_WIRE_PROPERTIES)
 	);
 
-	public static final RegistryObject<ColorfulRedstoneWireBlock> BLACK_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> BLACK_REDSTONE_WIRE = REGISTER.register(
 			"black_redstone_wire", () -> new ColorfulRedstoneWireBlock("black", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> BLUE_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> BLUE_REDSTONE_WIRE = REGISTER.register(
 			"blue_redstone_wire", () -> new ColorfulRedstoneWireBlock("blue", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> BROWN_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> BROWN_REDSTONE_WIRE = REGISTER.register(
 			"brown_redstone_wire", () -> new ColorfulRedstoneWireBlock("brown", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> CYAN_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> CYAN_REDSTONE_WIRE = REGISTER.register(
 			"cyan_redstone_wire", () -> new ColorfulRedstoneWireBlock("cyan", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> GRAY_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> GRAY_REDSTONE_WIRE = REGISTER.register(
 			"gray_redstone_wire", () -> new ColorfulRedstoneWireBlock("gray", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> GREEN_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> GREEN_REDSTONE_WIRE = REGISTER.register(
 			"green_redstone_wire", () -> new ColorfulRedstoneWireBlock("green", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> LIGHT_BLUE_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> LIGHT_BLUE_REDSTONE_WIRE = REGISTER.register(
 			"light_blue_redstone_wire", () -> new ColorfulRedstoneWireBlock("light_blue", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> LIGHT_GRAY_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> LIGHT_GRAY_REDSTONE_WIRE = REGISTER.register(
 			"light_gray_redstone_wire", () -> new ColorfulRedstoneWireBlock("light_gray", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> LIME_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> LIME_REDSTONE_WIRE = REGISTER.register(
 			"lime_redstone_wire", () -> new ColorfulRedstoneWireBlock("lime", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> MAGENTA_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> MAGENTA_REDSTONE_WIRE = REGISTER.register(
 			"magenta_redstone_wire", () -> new ColorfulRedstoneWireBlock("magenta", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> ORANGE_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> ORANGE_REDSTONE_WIRE = REGISTER.register(
 			"orange_redstone_wire", () -> new ColorfulRedstoneWireBlock("orange", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> PINK_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> PINK_REDSTONE_WIRE = REGISTER.register(
 			"pink_redstone_wire", () -> new ColorfulRedstoneWireBlock("pink", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> PURPLE_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> PURPLE_REDSTONE_WIRE = REGISTER.register(
 			"purple_redstone_wire", () -> new ColorfulRedstoneWireBlock("purple", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> RED_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> RED_REDSTONE_WIRE = REGISTER.register(
 			"red_redstone_wire", () -> new ColorfulRedstoneWireBlock("red", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> WHITE_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> WHITE_REDSTONE_WIRE = REGISTER.register(
 			"white_redstone_wire", () -> new ColorfulRedstoneWireBlock("white", REDSTONE_WIRE_PROPERTIES)
 	);
-	public static final RegistryObject<ColorfulRedstoneWireBlock> YELLOW_REDSTONE_WIRE = REGISTER.register(
+	public static final DeferredHolder<Block, ColorfulRedstoneWireBlock> YELLOW_REDSTONE_WIRE = REGISTER.register(
 			"yellow_redstone_wire", () -> new ColorfulRedstoneWireBlock("yellow", REDSTONE_WIRE_PROPERTIES)
 	);
 
@@ -105,15 +105,15 @@ public class DRSBlocks {
 		};
 	}
 
-	public static final RegistryObject<CommonRedstoneConverter> COMMON_REDSTONE_CONVERTER = REGISTER.register(
+	public static final DeferredHolder<Block, CommonRedstoneConverter> COMMON_REDSTONE_CONVERTER = REGISTER.register(
 			"common_redstone_converter", () -> new CommonRedstoneConverter(CONVERTER_PROPERTIES)
 	);
 
-	public static final RegistryObject<CommonRedstoneRepeater> COMMON_REDSTONE_REPEATER = REGISTER.register(
+	public static final DeferredHolder<Block, CommonRedstoneRepeater> COMMON_REDSTONE_REPEATER = REGISTER.register(
 			"common_redstone_repeater", () -> new CommonRedstoneRepeater(CONVERTER_PROPERTIES)
 	);
 
-	public static final RegistryObject<RedstoneDyerBlock> REDSTONE_DYER = REGISTER.register(
+	public static final DeferredHolder<Block, RedstoneDyerBlock> REDSTONE_DYER = REGISTER.register(
 			"redstone_dyer", () -> new RedstoneDyerBlock(REDSTONE_DYER_PROPERTIES)
 	);
 
@@ -145,12 +145,12 @@ public class DRSBlocks {
 	}
 
 	@SuppressWarnings("UnusedReturnValue")
-	private static DRSItems.ItemEntry<BlockItem> registerWireItem(RegistryObject<? extends Block> block) {
+	private static DRSItems.ItemEntry<BlockItem> registerWireItem(DeferredHolder<Block, ? extends Block> block) {
 		return DRSItems.ItemEntry.register(block.getId().getPath().replaceAll("_wire", ""), () -> new ItemNameBlockItem(block.get(), new Item.Properties()));
 	}
 
 	@SuppressWarnings("UnusedReturnValue")
-	private static DRSItems.ItemEntry<BlockItem> registerItem(RegistryObject<? extends Block> block) {
+	private static DRSItems.ItemEntry<BlockItem> registerItem(DeferredHolder<Block, ? extends Block> block) {
 		return DRSItems.ItemEntry.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
 	}
 }

@@ -3,15 +3,13 @@ package com.hexagram2021.dyeable_redstone_signal.common.util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegisterEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.hexagram2021.dyeable_redstone_signal.DyeableRedstoneSignal.MODID;
 
-@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DRSSounds {
 	static final Map<ResourceLocation, SoundEvent> registeredEvents = new HashMap<>();
 

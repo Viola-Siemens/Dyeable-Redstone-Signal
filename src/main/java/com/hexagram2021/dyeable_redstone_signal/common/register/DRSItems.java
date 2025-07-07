@@ -3,13 +3,13 @@ package com.hexagram2021.dyeable_redstone_signal.common.register;
 import com.google.common.collect.Lists;
 import com.hexagram2021.dyeable_redstone_signal.common.item.RedstoneAmmeter;
 import net.minecraft.Util;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,7 +19,7 @@ import static com.hexagram2021.dyeable_redstone_signal.DyeableRedstoneSignal.MOD
 import static com.hexagram2021.dyeable_redstone_signal.common.util.RegistryHelper.getRegistryName;
 
 public class DRSItems {
-	public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+	public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(Registries.ITEM, MODID);
 
 	public static final ItemEntry<RedstoneAmmeter> REDSTONE_AMMETER = ItemEntry.register(
 			"redstone_ammeter", () -> new RedstoneAmmeter(new Item.Properties().stacksTo(1))
@@ -34,7 +34,7 @@ public class DRSItems {
 	public static class ItemEntry<T extends Item> implements Supplier<T>, ItemLike {
 		public static final List<ItemEntry<? extends Item>> ALL_ITEMS = Lists.newArrayList();
 
-		private final RegistryObject<T> regObject;
+		private final DeferredHolder<Item, T> regObject;
 
 		private static ItemEntry<Item> simple(String name) {
 			return simple(name, $ -> { }, $ -> { });
@@ -54,10 +54,10 @@ public class DRSItems {
 		}
 
 		private static <T extends Item> ItemEntry<T> of(T existing) {
-			return new ItemEntry<>(RegistryObject.create(getRegistryName(existing), ForgeRegistries.ITEMS));
+			return new ItemEntry<>(DeferredHolder.create(Registries.ITEM, getRegistryName(existing)));
 		}
 
-		private ItemEntry(RegistryObject<T> regObject) {
+		private ItemEntry(DeferredHolder<Item, T> regObject) {
 			this.regObject = regObject;
 			ALL_ITEMS.add(this);
 		}
