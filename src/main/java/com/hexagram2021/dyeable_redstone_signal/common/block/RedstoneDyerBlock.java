@@ -2,6 +2,7 @@ package com.hexagram2021.dyeable_redstone_signal.common.block;
 
 import com.hexagram2021.dyeable_redstone_signal.common.block.entity.RedstoneDyerBlockEntity;
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlockEntities;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,6 +23,12 @@ import javax.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
 public class RedstoneDyerBlock extends BaseEntityBlock {
+	public static final MapCodec<RedstoneDyerBlock> CODEC = simpleCodec(RedstoneDyerBlock::new);
+
+	@Override
+	public MapCodec<? extends RedstoneDyerBlock> codec() {
+		return CODEC;
+	}
 
 	public RedstoneDyerBlock(BlockBehaviour.Properties properties) {
 		super(properties);

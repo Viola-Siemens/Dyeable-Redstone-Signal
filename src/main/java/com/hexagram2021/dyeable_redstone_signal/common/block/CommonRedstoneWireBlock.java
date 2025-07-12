@@ -2,6 +2,7 @@ package com.hexagram2021.dyeable_redstone_signal.common.block;
 
 import com.hexagram2021.dyeable_redstone_signal.common.block.entity.CommonRedstoneWireBlockEntity;
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlocks;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +19,13 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class CommonRedstoneWireBlock extends RedstoneWireBlock implements EntityBlock {
+	public static final MapCodec<CommonRedstoneWireBlock> CODEC = simpleCodec(CommonRedstoneWireBlock::new);
 	public static final IntegerProperty POWER = BlockStateProperties.POWER;
+
+	@Override
+	public MapCodec<? extends CommonRedstoneWireBlock> codec() {
+		return CODEC;
+	}
 
 	private static final Vec3[] COLORS = Util.make(new Vec3[16], (vec3s) -> {
 		for(int i = 0; i <= 15; ++i) {

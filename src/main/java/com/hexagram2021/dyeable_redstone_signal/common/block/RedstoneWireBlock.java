@@ -5,6 +5,7 @@ import com.hexagram2021.dyeable_redstone_signal.common.block.entity.CommonRedsto
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlocks;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -69,6 +70,9 @@ public abstract class RedstoneWireBlock extends Block {
 
 	@SuppressWarnings("FieldMayBeFinal")
 	private boolean shouldSignal = true;
+
+	@Override
+	protected abstract MapCodec<? extends RedstoneWireBlock> codec();
 
 	static class ShapeType {
 		private final RedstoneSide NORTH;

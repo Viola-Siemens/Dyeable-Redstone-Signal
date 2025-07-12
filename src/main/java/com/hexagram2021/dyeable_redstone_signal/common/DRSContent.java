@@ -14,8 +14,13 @@ import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static com.hexagram2021.dyeable_redstone_signal.DyeableRedstoneSignal.MODID;
@@ -60,27 +65,37 @@ public class DRSContent {
 			}
 			return InteractionResult.PASS;
 		};
-		CauldronInteraction.WATER.put(DRSBlocks.COMMON_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.BLACK_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.BLUE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.BROWN_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.CYAN_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.GRAY_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.GREEN_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.LIGHT_BLUE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.LIGHT_GRAY_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.LIME_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.MAGENTA_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.ORANGE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.PINK_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.PURPLE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.RED_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.WHITE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
-		CauldronInteraction.WATER.put(DRSBlocks.YELLOW_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		Map<Item, CauldronInteraction> waterInteraction = CauldronInteraction.WATER.map();
+		waterInteraction.put(DRSBlocks.COMMON_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.BLACK_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.BLUE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.BROWN_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.CYAN_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.GRAY_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.GREEN_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.LIGHT_BLUE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.LIGHT_GRAY_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.LIME_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.MAGENTA_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.ORANGE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.PINK_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.PURPLE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.RED_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.WHITE_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
+		waterInteraction.put(DRSBlocks.YELLOW_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);
 	}
 
 	@SubscribeEvent
 	public static void onRegister(RegisterEvent event) {
 		DRSSounds.init(event);
+	}
+
+	@SubscribeEvent
+	public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+		event.registerBlockEntity(
+				Capabilities.ItemHandler.BLOCK,
+				DRSBlockEntities.REDSTONE_DYER.get(),
+				(container, side) -> side == null ? new InvWrapper(container) : new SidedInvWrapper(container, side)
+		);
 	}
 }

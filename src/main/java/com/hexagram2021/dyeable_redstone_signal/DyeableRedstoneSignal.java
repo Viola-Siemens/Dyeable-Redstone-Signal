@@ -10,7 +10,6 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.ModLoadingStage;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import org.slf4j.Logger;
@@ -25,15 +24,14 @@ public class DyeableRedstoneSignal {
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public DyeableRedstoneSignal() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(this::setup);
+    public DyeableRedstoneSignal(IEventBus modEventBus) {
+        modEventBus.addListener(this::setup);
 
         DeferredWorkQueue queue = DeferredWorkQueue.lookup(Optional.of(ModLoadingStage.CONSTRUCT)).orElseThrow();
         Consumer<Runnable> runLater = job -> queue.enqueueWork(
                 ModLoadingContext.get().getActiveContainer(), job
         );
-        DRSContent.modConstruction(bus, runLater);
+        DRSContent.modConstruction(modEventBus, runLater);
 
         NeoForge.EVENT_BUS.register(this);
     }

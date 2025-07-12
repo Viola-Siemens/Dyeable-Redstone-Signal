@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import com.hexagram2021.dyeable_redstone_signal.common.block.entity.CommonRedstoneRepeaterBlockEntity;
 import com.hexagram2021.dyeable_redstone_signal.common.block.entity.CommonRedstoneWireBlockEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,8 +33,14 @@ import net.minecraft.world.ticks.TickPriority;
 import org.jetbrains.annotations.Nullable;
 
 public class CommonRedstoneRepeater extends DiodeBlock implements EntityBlock {
+	public static final MapCodec<CommonRedstoneRepeater> CODEC = simpleCodec(CommonRedstoneRepeater::new);
 	public static final BooleanProperty LOCKED = BlockStateProperties.LOCKED;
 	public static final IntegerProperty DELAY = BlockStateProperties.DELAY;
+
+	@Override
+	public MapCodec<? extends CommonRedstoneRepeater> codec() {
+		return CODEC;
+	}
 
 	public CommonRedstoneRepeater(BlockBehaviour.Properties properties) {
 		super(properties);
