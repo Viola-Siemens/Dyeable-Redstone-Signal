@@ -1,6 +1,7 @@
 package com.hexagram2021.dyeable_redstone_signal.common.world;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlocks;
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSItems;
 import com.hexagram2021.dyeable_redstone_signal.common.util.DRSSounds;
@@ -8,9 +9,11 @@ import com.hexagram2021.dyeable_redstone_signal.mixin.HeroGiftsTaskAccess;
 import com.hexagram2021.dyeable_redstone_signal.mixin.StructureTemplatePoolAccess;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.ProcessorLists;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -24,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -48,19 +52,26 @@ public class Villages {
 	}
 
 	public static void addAllStructuresToPool(RegistryAccess registryAccess) {
-		addToPool(new ResourceLocation("village/plains/houses"), new ResourceLocation(MODID, "village/houses/plains_energy_researcher"), 5, registryAccess);
+		addToPool(new ResourceLocation("village/plains/houses"), new ResourceLocation(MODID, "village/houses/plains_energy_researcher"), 3, registryAccess);
 	}
 
 	@SuppressWarnings("SameParameterValue")
 	private static void addToPool(ResourceLocation poolName, ResourceLocation toAdd, int weight, RegistryAccess registryAccess) {
 		Registry<StructureTemplatePool> registry = registryAccess.registryOrThrow(Registries.TEMPLATE_POOL);
+		Registry<StructureProcessorList> registryProcessorList = registryAccess.registryOrThrow(Registries.PROCESSOR_LIST);
 		StructureTemplatePoolAccess pool = (StructureTemplatePoolAccess) Objects.requireNonNull(registry.get(poolName), poolName.getPath());
-		List<Pair<StructurePoolElement, Integer>> rawTemplates = pool.drs$getRawTemplates() instanceof ArrayList ?
-				pool.drs$getRawTemplates() : new ArrayList<>(pool.drs$getRawTemplates());
 
-		SinglePoolElement addedElement = SinglePoolElement.single(toAdd.toString()).apply(StructureTemplatePool.Projection.RIGID);
+		List<Pair<StructurePoolElement, Integer>> rawTemplates = pool.drs$getRawTemplates();
+		if(!(rawTemplates instanceof ArrayList<Pair<StructurePoolElement, Integer>>)) {
+			rawTemplates = Lists.newArrayList(rawTemplates);
+		}
+
+		SinglePoolElement addedElement = SinglePoolElement.legacy(toAdd.toString(), registryProcessorList.getHolderOrThrow(ProcessorLists.MOSSIFY_10_PERCENT)).apply(StructureTemplatePool.Projection.RIGID);
 		rawTemplates.add(Pair.of(addedElement, weight));
-		pool.drs$getTemplates().add(addedElement);
+		ObjectArrayList<StructurePoolElement> templates = pool.drs$getTemplates();
+		for(int i = 0; i < weight; ++i) {
+			templates.add(addedElement);
+		}
 
 		pool.drs$setRawTemplates(rawTemplates);
 	}
