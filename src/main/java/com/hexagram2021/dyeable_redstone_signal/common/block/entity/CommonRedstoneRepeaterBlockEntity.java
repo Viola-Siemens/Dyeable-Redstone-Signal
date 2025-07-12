@@ -3,6 +3,7 @@ package com.hexagram2021.dyeable_redstone_signal.common.block.entity;
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlockEntities;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -39,15 +40,15 @@ public class CommonRedstoneRepeaterBlockEntity extends BlockEntity {
 	private int[] colored_energies = Util.make(new int[16], (nums) -> Arrays.fill(nums, 0));
 
 	@Override
-	protected void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
+	protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
+		super.saveAdditional(nbt, provider);
 
 		nbt.putIntArray("Energies", this.colored_energies);
 	}
 
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
+		super.loadAdditional(nbt, provider);
 
 		this.colored_energies = nbt.getIntArray("Energies");
 	}
@@ -58,8 +59,8 @@ public class CommonRedstoneRepeaterBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public CompoundTag getUpdateTag() {
-		return this.saveWithoutMetadata();
+	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+		return this.saveWithoutMetadata(provider);
 	}
 
 	@Override

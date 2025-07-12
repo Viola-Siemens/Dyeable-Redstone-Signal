@@ -6,18 +6,18 @@ import com.hexagram2021.dyeable_redstone_signal.common.block.CommonRedstoneWireB
 import com.hexagram2021.dyeable_redstone_signal.common.block.RedstoneWireBlock;
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlocks;
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSContainerTypes;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import static com.hexagram2021.dyeable_redstone_signal.DyeableRedstoneSignal.MODID;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(value = Dist.CLIENT, modid = MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ClientEventSubscriber {
 	private static void setRenderLayer() {
 		ItemBlockRenderTypes.setRenderLayer(DRSBlocks.COMMON_REDSTONE_WIRE.get(), RenderType.cutoutMipped());
@@ -115,12 +115,11 @@ public class ClientEventSubscriber {
 
 	@SubscribeEvent
 	public static void setup(final FMLClientSetupEvent event) {
-		setRenderLayer();
-		registerContainersAndScreens();
+		event.enqueueWork(ClientEventSubscriber::setRenderLayer);
 	}
 
-
-	private static void registerContainersAndScreens() {
-		MenuScreens.register(DRSContainerTypes.REDSTONE_DYER_MENU.get(), RedstoneDyerScreen::new);
+	@SubscribeEvent
+	private static void registerContainersAndScreens(final RegisterMenuScreensEvent event) {
+		event.register(DRSContainerTypes.REDSTONE_DYER_MENU.get(), RedstoneDyerScreen::new);
 	}
 }

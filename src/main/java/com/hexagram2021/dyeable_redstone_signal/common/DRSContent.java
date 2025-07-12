@@ -5,7 +5,7 @@ import com.hexagram2021.dyeable_redstone_signal.common.register.*;
 import com.hexagram2021.dyeable_redstone_signal.common.util.DRSSounds;
 import com.hexagram2021.dyeable_redstone_signal.common.world.Villages;
 import net.minecraft.core.cauldron.CauldronInteraction;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +13,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
@@ -21,13 +21,12 @@ import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 import java.util.Map;
-import java.util.function.Consumer;
 
 import static com.hexagram2021.dyeable_redstone_signal.DyeableRedstoneSignal.MODID;
 
-@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
 public class DRSContent {
-	public static void modConstruction(IEventBus bus, Consumer<Runnable> runLater) {
+	public static void modConstruction(IEventBus bus) {
 		DRSBlocks.init(bus);
 		DRSItems.init(bus);
 		DRSBlockEntities.init(bus);
@@ -61,9 +60,9 @@ public class DRSContent {
 					}
 					LayeredCauldronBlock.lowerFillLevel(blockState, level, blockPos);
 				}
-				return InteractionResult.sidedSuccess(level.isClientSide);
+				return ItemInteractionResult.sidedSuccess(level.isClientSide);
 			}
-			return InteractionResult.PASS;
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		};
 		Map<Item, CauldronInteraction> waterInteraction = CauldronInteraction.WATER.map();
 		waterInteraction.put(DRSBlocks.COMMON_REDSTONE_WIRE.get().asItem(), DYED_REDSTONE);

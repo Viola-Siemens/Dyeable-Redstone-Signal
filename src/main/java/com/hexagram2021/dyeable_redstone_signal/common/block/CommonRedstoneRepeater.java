@@ -11,7 +11,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -52,10 +51,8 @@ public class CommonRedstoneRepeater extends DiodeBlock implements EntityBlock {
 		);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player,
-								 InteractionHand hand, BlockHitResult hit) {
+	public InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult hit) {
 		if (!player.getAbilities().mayBuild) {
 			return InteractionResult.PASS;
 		} else {
@@ -175,7 +172,6 @@ public class CommonRedstoneRepeater extends DiodeBlock implements EntityBlock {
 		return blockstate.setValue(LOCKED, this.isLocked(context.getLevel(), context.getClickedPos(), blockstate));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updateShape(BlockState blockState, Direction direction, BlockState neighbor, LevelAccessor level,
 								  BlockPos blockPos, BlockPos neighborBlockPos) {
@@ -213,11 +209,10 @@ public class CommonRedstoneRepeater extends DiodeBlock implements EntityBlock {
 		builder.add(FACING, DELAY, LOCKED, POWERED);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onNeighborChange(BlockState state, net.minecraft.world.level.LevelReader world, BlockPos pos, BlockPos neighbor) {
 		if (pos.getY() == neighbor.getY() && world instanceof Level && !world.isClientSide()) {
-			state.neighborChanged((Level)world, pos, world.getBlockState(neighbor).getBlock(), neighbor, false);
+			state.handleNeighborChanged((Level)world, pos, world.getBlockState(neighbor).getBlock(), neighbor, false);
 		}
 	}
 

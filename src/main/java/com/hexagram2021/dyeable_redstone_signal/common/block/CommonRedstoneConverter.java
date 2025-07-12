@@ -89,10 +89,10 @@ public class CommonRedstoneConverter extends DiodeBlock {
 		builder.add(FACING, POWER, POWERED);
 	}
 
-	@Override @SuppressWarnings("deprecation")
+	@Override
 	public void onNeighborChange(BlockState state, net.minecraft.world.level.LevelReader world, BlockPos pos, BlockPos neighbor) {
 		if (pos.getY() == neighbor.getY() && world instanceof Level && !world.isClientSide()) {
-			state.neighborChanged((Level)world, pos, world.getBlockState(neighbor).getBlock(), neighbor, false);
+			state.handleNeighborChanged((Level)world, pos, world.getBlockState(neighbor).getBlock(), neighbor, false);
 		}
 	}
 

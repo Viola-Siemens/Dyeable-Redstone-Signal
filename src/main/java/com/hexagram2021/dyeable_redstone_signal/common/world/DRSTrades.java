@@ -7,10 +7,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ItemLike;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 @SuppressWarnings("unused")
 public class DRSTrades {
@@ -52,8 +54,8 @@ public class DRSTrades {
 		@Nullable
 		@Override
 		public MerchantOffer getOffer(Entity trader, RandomSource rand) {
-			ItemStack itemstack = new ItemStack(this.item, this.cost);
-			return new MerchantOffer(itemstack, new ItemStack(Items.EMERALD, numberOfEmerald), this.maxUses, this.Xp, this.priceMultiplier);
+			ItemCost itemCost = new ItemCost(this.item, this.cost);
+			return new MerchantOffer(itemCost, new ItemStack(Items.EMERALD, numberOfEmerald), this.maxUses, this.Xp, this.priceMultiplier);
 		}
 	}
 
@@ -77,7 +79,7 @@ public class DRSTrades {
 		@Nullable
 		@Override
 		public MerchantOffer getOffer(Entity trader, RandomSource rand) {
-			return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.Xp, this.priceMultiplier);
+			return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldCost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.Xp, this.priceMultiplier);
 		}
 	}
 
@@ -105,9 +107,9 @@ public class DRSTrades {
 		@Override
 		public MerchantOffer getOffer(Entity trader, RandomSource rand) {
 			int i = this.baseLevel + rand.nextInt(this.addLevel);
-			ItemStack itemstack = EnchantmentHelper.enchantItem(rand, new ItemStack(this.itemStack.getItem()), i, treasure);
+			ItemStack itemstack = EnchantmentHelper.enchantItem(trader.level().enabledFeatures(), rand, new ItemStack(this.itemStack.getItem()), i, treasure);
 			int j = Math.min(this.baseEmeraldCost + i, 64);
-			return new MerchantOffer(new ItemStack(Items.EMERALD, j), itemstack, this.maxUses, this.Xp, this.priceMultiplier);
+			return new MerchantOffer(new ItemCost(Items.EMERALD, j), itemstack, this.maxUses, this.Xp, this.priceMultiplier);
 		}
 	}
 
@@ -135,7 +137,7 @@ public class DRSTrades {
 		@Nullable
 		@Override
 		public MerchantOffer getOffer(Entity trader, RandomSource rand) {
-			return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCost), new ItemStack(this.fromItem.getItem(), this.fromCount), new ItemStack(this.toItem.getItem(), this.toCount), this.maxUses, this.Xp, this.priceMultiplier);
+			return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldCost), Optional.of(new ItemCost(this.fromItem.getItem(), this.fromCount)), new ItemStack(this.toItem.getItem(), this.toCount), this.maxUses, this.Xp, this.priceMultiplier);
 		}
 	}
 }

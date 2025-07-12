@@ -8,6 +8,7 @@ import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlocks;
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -100,22 +101,22 @@ public class RedstoneDyerBlockEntity extends BaseContainerBlockEntity implements
 	}
 
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider lookup) {
+		super.loadAdditional(nbt, lookup);
 		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(nbt, this.items);
+		ContainerHelper.loadAllItems(nbt, this.items, lookup);
 		this.fluid = nbt.getInt("Fluid");
 		this.dye = nbt.getInt("DyeColor");
 		this.todo = nbt.getInt("ToDo");
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
+	public void saveAdditional(CompoundTag nbt, HolderLookup.Provider lookup) {
+		super.saveAdditional(nbt, lookup);
 		nbt.putInt("Fluid", this.fluid);
 		nbt.putInt("DyeColor", this.dye);
 		nbt.putInt("ToDo", this.todo);
-		ContainerHelper.saveAllItems(nbt, this.items);
+		ContainerHelper.saveAllItems(nbt, this.items, lookup);
 	}
 
 	/*
@@ -305,6 +306,16 @@ public class RedstoneDyerBlockEntity extends BaseContainerBlockEntity implements
 			return false;
 		}
 		return player.distanceToSqr((double)this.worldPosition.getX() + 0.5D, (double)this.worldPosition.getY() + 0.5D, (double)this.worldPosition.getZ() + 0.5D) <= 64.0D;
+	}
+
+	@Override
+	protected NonNullList<ItemStack> getItems() {
+		return this.items;
+	}
+
+	@Override
+	protected void setItems(NonNullList<ItemStack> items) {
+		this.items = items;
 	}
 
 	@Override

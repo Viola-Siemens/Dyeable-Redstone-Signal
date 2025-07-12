@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.hexagram2021.dyeable_redstone_signal.common.register.DRSBlockEntities;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 @SuppressWarnings("unused")
 public class CommonRedstoneWireBlockEntity extends BlockEntity {
-	private int[] colored_energies = Util.make(new int[16], (nums) -> Arrays.fill(nums, 0));
+	private int[] coloredEnergies = Util.make(new int[16], (nums) -> Arrays.fill(nums, 0));
 
 	static final ImmutableMap.Builder<String, Integer> COLOR_INDEX_BUILDER = ImmutableMap.<String, Integer>builder()
 			.put("black", 0)
@@ -47,37 +48,37 @@ public class CommonRedstoneWireBlockEntity extends BlockEntity {
 	}
 
 	public int getColoredEnergy(int index) {
-		return this.colored_energies[index];
+		return this.coloredEnergies[index];
 	}
 
 	public int[] getColoredEnergies() {
-		return this.colored_energies;
+		return this.coloredEnergies;
 	}
 
 	public void setColoredEnergy(int index, int value) {
-		this.colored_energies[index] = value;
+		this.coloredEnergies[index] = value;
 	}
 
 	public void setColoredEnergies(int[] values) {
-		System.arraycopy(values, 0, this.colored_energies, 0, COLORS.length);
+		System.arraycopy(values, 0, this.coloredEnergies, 0, COLORS.length);
 	}
 
 	public int getMaxEnergy() {
-		return Arrays.stream(this.colored_energies).max().orElse(0);
+		return Arrays.stream(this.coloredEnergies).max().orElse(0);
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
+	protected void saveAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
+		super.saveAdditional(nbt, provider);
 
-		nbt.putIntArray("Energies", this.colored_energies);
+		nbt.putIntArray("Energies", this.coloredEnergies);
 	}
 
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
+		super.loadAdditional(nbt, provider);
 
-		this.colored_energies = nbt.getIntArray("Energies");
+		this.coloredEnergies = nbt.getIntArray("Energies");
 	}
 
 	@Override
@@ -86,8 +87,8 @@ public class CommonRedstoneWireBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public CompoundTag getUpdateTag() {
-		return this.saveWithoutMetadata();
+	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+		return this.saveWithoutMetadata(provider);
 	}
 
 	@Override

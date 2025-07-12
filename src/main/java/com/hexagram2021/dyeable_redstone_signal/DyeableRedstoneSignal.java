@@ -5,17 +5,11 @@ import com.hexagram2021.dyeable_redstone_signal.common.world.Villages;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.DeferredWorkQueue;
-import net.neoforged.fml.ModLoadingContext;
-import net.neoforged.fml.ModLoadingStage;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import org.slf4j.Logger;
-
-import java.util.Optional;
-import java.util.function.Consumer;
 
 @Mod(DyeableRedstoneSignal.MODID)
 public class DyeableRedstoneSignal {
@@ -27,11 +21,7 @@ public class DyeableRedstoneSignal {
     public DyeableRedstoneSignal(IEventBus modEventBus) {
         modEventBus.addListener(this::setup);
 
-        DeferredWorkQueue queue = DeferredWorkQueue.lookup(Optional.of(ModLoadingStage.CONSTRUCT)).orElseThrow();
-        Consumer<Runnable> runLater = job -> queue.enqueueWork(
-                ModLoadingContext.get().getActiveContainer(), job
-        );
-        DRSContent.modConstruction(modEventBus, runLater);
+        DRSContent.modConstruction(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
     }

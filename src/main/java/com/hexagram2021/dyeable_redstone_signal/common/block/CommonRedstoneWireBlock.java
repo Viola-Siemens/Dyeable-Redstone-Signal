@@ -98,9 +98,9 @@ public class CommonRedstoneWireBlock extends RedstoneWireBlock implements Entity
 				BlockEntity blockEntity = level.getBlockEntity(blockpos);
 				BlockState blockState = level.getBlockState(blockpos);
 				j = Math.max(j, getWireSignal(blockEntity, blockState, colorIndex, direction));
-				BlockPos blockpos1 = blockPos.above();
+				BlockPos above = blockPos.above();
 				if (blockState.isRedstoneConductor(level, blockpos) &&
-						!level.getBlockState(blockpos1).isRedstoneConductor(level, blockpos1)) {
+						!level.getBlockState(above).isRedstoneConductor(level, above)) {
 					j = Math.max(j, getWireSignal(level.getBlockEntity(blockpos.above()), level.getBlockState(blockpos.above()), colorIndex, direction));
 				} else if (!blockState.isRedstoneConductor(level, blockpos)) {
 					j = Math.max(j, getWireSignal(level.getBlockEntity(blockpos.below()), level.getBlockState(blockpos.below()), colorIndex, direction));

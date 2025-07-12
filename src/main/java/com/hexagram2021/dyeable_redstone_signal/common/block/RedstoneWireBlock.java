@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -169,7 +168,6 @@ public abstract class RedstoneWireBlock extends Block {
 				.setValue(WEST, RedstoneSide.SIDE);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos blockPos, CollisionContext context) {
 		return SHAPES_CACHE.get(new ShapeType(blockState));
@@ -232,7 +230,6 @@ public abstract class RedstoneWireBlock extends Block {
 		return blockState;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updateShape(BlockState blockState, Direction direction, BlockState neighbor, LevelAccessor level,
 								  BlockPos blockPos, BlockPos neighborBlockPos) {
@@ -268,7 +265,6 @@ public abstract class RedstoneWireBlock extends Block {
 
 	protected abstract boolean canConnectWireWith(BlockState blockState);
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void updateIndirectNeighbourShapes(BlockState blockState, LevelAccessor level, BlockPos blockPos, int update, int limit) {
 		BlockPos.MutableBlockPos mutableblockpos = new BlockPos.MutableBlockPos();
@@ -332,7 +328,6 @@ public abstract class RedstoneWireBlock extends Block {
 		return this.shouldConnectTo(level.getBlockState(blockPosBelow), null) ?RedstoneSide.SIDE : RedstoneSide.NONE;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(BlockState blockState, LevelReader level, BlockPos blockPos) {
 		BlockPos below = blockPos.below();
@@ -358,7 +353,6 @@ public abstract class RedstoneWireBlock extends Block {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState neighbor, boolean update) {
 		if (!neighbor.is(blockState.getBlock()) && !neighbor.is(DRSBlocks.COMMON_REDSTONE_WIRE.get()) && !level.isClientSide) {
@@ -372,7 +366,6 @@ public abstract class RedstoneWireBlock extends Block {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState neighbor, boolean update) {
 		if (!update && !blockState.is(neighbor.getBlock()) && !neighbor.is(DRSBlocks.COMMON_REDSTONE_WIRE.get())) {
@@ -403,7 +396,6 @@ public abstract class RedstoneWireBlock extends Block {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos neighborBlockPos, boolean update) {
 		if (!level.isClientSide) {
@@ -416,7 +408,6 @@ public abstract class RedstoneWireBlock extends Block {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public int getDirectSignal(BlockState blockState, BlockGetter level, BlockPos blockPos, Direction direction) {
 		return !this.shouldSignal ? 0 : blockState.getSignal(level, blockPos, direction);
@@ -428,7 +419,6 @@ public abstract class RedstoneWireBlock extends Block {
 		return blockState;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public int getSignal(BlockState blockState, BlockGetter level, BlockPos blockPos, Direction direction) {
 		if (this.shouldSignal && direction != Direction.DOWN) {
@@ -464,7 +454,6 @@ public abstract class RedstoneWireBlock extends Block {
 		return other.isSignalSource() && direction != null;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isSignalSource(BlockState blockState) {
 		return this.shouldSignal;
@@ -508,7 +497,6 @@ public abstract class RedstoneWireBlock extends Block {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState rotate(BlockState blockState, Rotation rotation) {
 		return switch (rotation) {
@@ -531,7 +519,6 @@ public abstract class RedstoneWireBlock extends Block {
 		};
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState blockState, Mirror mirror) {
 		return switch (mirror) {
@@ -546,10 +533,8 @@ public abstract class RedstoneWireBlock extends Block {
 		builder.add(NORTH, EAST, SOUTH, WEST);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player,
-								 InteractionHand interactionHand, BlockHitResult result) {
+	public InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult result) {
 		if (!player.getAbilities().mayBuild) {
 			return InteractionResult.PASS;
 		}
